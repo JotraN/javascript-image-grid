@@ -4,7 +4,7 @@ The example provided assumes the aspect ratio of each image is 1:1, that is the 
 It uses a canvas to draw the images as the canvas can crop images easily.<br>
 Multiple divs are then added for each image to allow interaction with each image.
 <h1>Example</h1>
-<a href="https://raw.githubusercontent.com/JotraN/javascript-image-grid/master/example.png"><img src="example.png" alt="Example" width="200px"/></a>
+<a href="http://jotran.github.io/javascript-image-grid/"><img src="example.png" alt="Example" width="200px"/></a>
 <h2>DISCLAIMER:</h2> 
 You can use this for whatever.
 <h1>Installation Instructions</h1>
