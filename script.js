@@ -7,19 +7,19 @@ $(document).ready(function(){
 	var numRows = 2;
 	// Fill items, length needs to be evenly divisible by numRows to ensure equal rows, 
 	var items = [
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
-		new Item("office.png"),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
+		new Item("office.png", ctx),
 	];
 	// one more item needs to be added to stretch canvas.
-	items.push(new Item(null));
+	items.push(new Item("office.png", ctx)),
 
 	setup(items, ctx, numRows);
 
@@ -50,23 +50,27 @@ function setup(items, ctx, numRows){
 	$.each(items, function(i, item){
 		var image = new Image();
 		image.src = item.image;
-		var cropWidth = image.width;
-		var cropHeight = image.height;
-		// If landscape mode, adjust height, assumes image height and width are the same.
-		if(thumbWidth > thumbHeight){
-			ratio = thumbWidth/thumbHeight;
-			cropHeight = cropHeight/ratio;
-		} else{
-			// adjust width if portrait
-			ratio = thumbHeight/thumbWidth;
-			cropWidth = cropWidth/ratio;
-		}
 		// Create div for image and add it's src to use for when clicked.
-		$("#list").append("<div class='frame' src='" + item.image + "'><div>");
+		$("#list").append("<div class='frame' src='" + item.image.src + "'><div>");
 
-		// Draws image starting at top left corner of image e.g. 0, 0.
-		ctx.drawImage(image, 0, 0, cropWidth, cropHeight, x, y, thumbWidth, thumbHeight);
-
+		// Save the item position to use when image is loaded.
+		item.x = x;
+		item.y = y;
+		image.onload = function(){
+			var cropWidth = this.width;
+			var cropHeight = this.height;
+			// If landscape mode, adjust height, assumes image height and width are the same.
+			if(thumbWidth > thumbHeight){
+				ratio = thumbWidth/thumbHeight;
+				cropHeight = cropHeight/ratio;
+			} else{
+				// adjust width if portrait
+				ratio = thumbHeight/thumbWidth;
+				cropWidth = cropWidth/ratio;
+			}
+			// ctx.drawImage(this, 0, 0, cropWidth, cropHeight, item.x, item.y, thumbWidth, thumbHeight);
+			ctx.drawImage(this, 0, 0, cropWidth, cropHeight, item.x, item.y, thumbWidth, thumbHeight);
+		}
 		// Draw borders
 		ctx.fillRect(x, 0, 1, $(window).height());
 		ctx.fillRect(0, y, $(window).width(), 1);
@@ -82,7 +86,7 @@ function setup(items, ctx, numRows){
 	$(".frame").height(thumbHeight);
 }
 
-function Item(image){
+function Item(image, ctx){
 	this.image = image;
 }
 
