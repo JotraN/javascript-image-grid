@@ -24,7 +24,7 @@ $(document).ready(function(){
 	setup(items, ctx, numRows);
 
 	$("#list").on('click', 'div', function(){
-		alert($(this).attr("src"));
+		alert("You can find this image at:\n" + $(this).attr("src"));
 	});
 
 	// Adjust image sizes on resize.
@@ -51,7 +51,7 @@ function setup(items, ctx, numRows){
 		var image = new Image();
 		image.src = item.image;
 		// Create div for image and add it's src to use for when clicked.
-		$("#list").append("<div class='frame' src='" + item.image.src + "'><div>");
+		$("#list").append("<div class='frame' src='" + image.src + "'><div>");
 
 		// Save the item position to use when image is loaded.
 		item.x = x;
